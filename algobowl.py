@@ -45,12 +45,6 @@ def top_swapper_once(processes, times, inputs):
     after_swap_time = times[swappee] \
         + (proc_times[processes[highest][high_elem]] / speeds[swappee]) \
         - (proc_times[processes[swappee][swap_elem]] / speeds[swappee])
-    #after_diff = abs((times[highest] -
-    #                  (proc_times[processes[highest][high_elem]] / speeds[highest]) +
-    #                  (proc_times[processes[swappee][swap_elem]] / speeds[highest])) -
-    #                 (times[swappee] +
-    #                  (proc_times[processes[highest][high_elem]] / speeds[swappee]) -
-    #                  (proc_times[processes[swappee][swap_elem]] / speeds[swappee])))
     after_diff = abs(after_high_time - after_swap_time)
 
     #print(before_diff, after_diff)
