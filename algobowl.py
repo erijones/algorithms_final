@@ -28,7 +28,7 @@ def greedy_choice(proc, proc_time, times, processes, speeds):
     for mach, speed in enumerate(speeds):
         # i is machine no., speed is i's speed
 
-        times[mach] += speed * proc_time
+        times[mach] += proc_time / speed
         diff = max(times) - min(times)
 
         # check if the current machine choice is the best choice so far
@@ -42,7 +42,7 @@ def greedy_choice(proc, proc_time, times, processes, speeds):
 
         # go back to the original process times so that we can test the next
         # machine
-        times[mach] -= speed * proc_time
+        times[mach] -= proc_time / speed
 
     # get the speed of the machine we've chosen
     speed = speeds[best_choice]
@@ -50,7 +50,7 @@ def greedy_choice(proc, proc_time, times, processes, speeds):
     # update the machine we've chosen with the process
     processes[best_choice] += [proc]
     # add the time that this process adds to the chosen machine's total time
-    times[best_choice] += speed * proc_time
+    times[best_choice] += proc_time / speed
 
     return processes, times
 
@@ -60,8 +60,8 @@ def get_inputs(argv):
     with open(infile) as f:
         inputs = [line.strip() for line in f]
 
-    inputs = [int(param) if i < 2 else param.split(' ') for i, param in
-            enumerate(inputs)]
+    inputs = [int(param) if i < 2 else param.split(' ')
+              for i, param in enumerate(inputs)]
 
     for i, param in enumerate(inputs):
         if i > 1:
@@ -72,8 +72,9 @@ def get_inputs(argv):
 def print_results(processes, times):
     for mach in processes:
         print(' '.join(str(proc) for proc in mach))
+        print()
 
-    print(min(times))
+    print(max(times))
 
 
 if __name__ == "__main__":
