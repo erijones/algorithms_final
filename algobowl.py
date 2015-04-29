@@ -10,11 +10,14 @@ def main(argv):
     processes, times = greedy_method(inputs)
     print("greedy min distance:")
     print_results(processes, times)
-    print()
+    print("")
 
-    print("top swapper min distance:")
-    processes, times = top_swapper(processes, times, inputs)
-    print_results(processes, times)
+    if inputs[0] > inputs[1]:
+        print("top swapper min distance:")
+        processes, times = top_swapper(processes, times, inputs)
+        print_results(processes, times)
+    else:
+        print("Number of machines is greater than number of tasks; greedy algorithm will suffice")
 
 def top_swapper(processes, times, inputs):
     # run the top swapper a bunch of times
@@ -61,10 +64,7 @@ def top_swapper_once(processes, times, inputs):
         times[swappee] = after_swap_time
         return processes, times
 
-
-
     return processes, times
-
 
 def greedy_method(inputs):
     # solves problem based on the greedy method
