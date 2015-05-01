@@ -132,8 +132,8 @@ def get_inputs(argv):
 def print_results(processes, times):
     f = open('out_file.txt', 'w')
     for mach in processes:
-        print(' '.join(str(proc) for proc in mach))
-        f.write(' '.join(str(proc) for proc in mach))
+        print(' '.join(str(proc+1) for proc in mach))
+        f.write(' '.join(str(proc+1) for proc in mach))
         f.write('\n')
 
     print(max(times))
