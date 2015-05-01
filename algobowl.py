@@ -40,14 +40,14 @@ def top_swapper_once(processes, times, inputs):
     swap_elem = rand.randint(0, len(processes[swappee])-1)
 
     # check relative distances
-    before_diff = times[highest] - times[swappee]
-    after_high_time = times[highest] \
+    before_diff = float(times[highest] - times[swappee])
+    after_high_time = float(times[highest] \
         - (proc_times[processes[highest][high_elem]] / speeds[highest]) \
-        + (proc_times[processes[swappee][swap_elem]] / speeds[highest])
-    after_swap_time = times[swappee] \
+        + (proc_times[processes[swappee][swap_elem]] / speeds[highest]))
+    after_swap_time = float(times[swappee] \
         + (proc_times[processes[highest][high_elem]] / speeds[swappee]) \
-        - (proc_times[processes[swappee][swap_elem]] / speeds[swappee])
-    after_diff = abs(after_high_time - after_swap_time)
+        - (proc_times[processes[swappee][swap_elem]] / speeds[swappee]))
+    after_diff = abs(float(after_high_time - after_swap_time))
 
     #print(before_diff, after_diff)
 
@@ -59,8 +59,8 @@ def top_swapper_once(processes, times, inputs):
         temp_swap = processes[swappee].pop(swap_elem)
         processes[highest].append(temp_swap)
         processes[swappee].append(temp_high)
-        times[highest] = after_high_time
-        times[swappee] = after_swap_time
+        times[highest] = float(after_high_time)
+        times[swappee] = float(after_swap_time)
         return processes, times
 
     return processes, times
@@ -71,7 +71,7 @@ def greedy_method(inputs):
     num_tasks, num_machs, proc_times, speeds = inputs
 
     processes = [[] for i in range(num_machs)] # array to hold the processes assigned to each machine
-    times = [0 for i in range(num_machs)] # array to hold the process time for each machine
+    times = [float(0) for i in range(num_machs)] # array to hold the process time for each machine
 
     for proc, proc_time in enumerate(proc_times):
         # proc is the process number, proc_time is the process time
@@ -88,8 +88,8 @@ def greedy_choice(proc, proc_time, times, processes, speeds):
     for mach, speed in enumerate(speeds):
         # i is machine no., speed is i's speed
 
-        times[mach] += proc_time / speed
-        diff = max(times) - min(times)
+        times[mach] += float(proc_time / speed)
+        diff = float(max(times) - min(times))
 
         # check if the current machine choice is the best choice so far
         if mach == 0: # first machine, must be the best choice so far
@@ -97,20 +97,20 @@ def greedy_choice(proc, proc_time, times, processes, speeds):
             best_choice = mach
         else:
             if diff < min_diff:
-                min_diff = diff
+                min_diff = float(diff)
                 best_choice = mach
 
         # go back to the original process times so that we can test the next
         # machine
-        times[mach] -= proc_time / speed
+        times[mach] -= float(proc_time / speed)
 
     # get the speed of the machine we've chosen
-    speed = speeds[best_choice]
+    speed = float(speeds[best_choice])
 
     # update the machine we've chosen with the process
     processes[best_choice] += [proc]
     # add the time that this process adds to the chosen machine's total time
-    times[best_choice] += proc_time / speed
+    times[best_choice] += float(proc_time / speed)
 
     return processes, times
 
@@ -125,7 +125,7 @@ def get_inputs(argv):
 
     for i, param in enumerate(inputs):
         if i > 1:
-            inputs[i] = [int(x) for x in param]
+            inputs[i] = [float(x) for x in param]
 
     return inputs
 
@@ -136,7 +136,7 @@ def print_results(processes, times):
         f.write(' '.join(str(proc+1) for proc in mach))
         f.write('\n')
 
-    print(max(times))
+    print((times))
     f.write(str(max(times))) 
 
 
