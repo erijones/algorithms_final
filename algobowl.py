@@ -11,7 +11,6 @@ def main(argv):
     print("greedy min distance:")
     print_results(processes, times)
     print("")
-
     if inputs[0] > inputs[1]:
         print("top swapper min distance:")
         processes, times = top_swapper(processes, times, inputs)
@@ -131,10 +130,14 @@ def get_inputs(argv):
     return inputs
 
 def print_results(processes, times):
-    #for mach in processes:
-    #    print(' '.join(str(proc) for proc in mach))
+    f = open('out_file.txt', 'w')
+    for mach in processes:
+        print(' '.join(str(proc) for proc in mach))
+        f.write(' '.join(str(proc) for proc in mach))
+        f.write('\n')
 
     print(max(times))
+    f.write(str(max(times))) 
 
 
 if __name__ == "__main__":
